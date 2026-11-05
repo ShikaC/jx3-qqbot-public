@@ -1,0 +1,123 @@
+{
+"prefix": {
+    "description": "指令前缀",
+    "type": "object",
+    "items": {
+      "follow_astrbot_wake": {
+        "description": "是否遵循 AstrBot 唤醒规则",
+        "type": "bool",
+        "default": false,
+        "hint": "开启后，先遵循 AstrBot 唤醒规则，再匹配剑三指令；关闭时解析所有消息，仍按下方设置检查插件前缀。"
+      },
+      "enable": {
+        "description": "是否启用前缀",
+        "type": "bool",
+        "default": false,
+        "hint": "是否启用指令前缀检查功能"
+      },
+      "text": {
+        "description": "前缀内容",
+        "type": "string",
+        "default": "剑三",
+        "hint": "开启前缀后，消息需以此内容开头。若同时遵循 AstrBot 唤醒规则，需先满足宿主唤醒条件，例如宿主唤醒头 /、插件前缀 剑三 时，发送 /剑三 日常。内容为空或只有空格时按未开启前缀处理。"
+      }
+    }
+  },
+  "jx3api_token": {
+    "description": "JX3API Token",
+    "type": "string",
+    "default": "",
+    "hint": "前往https://www.jx3api.com/注册并购买Token。"
+  },
+  "jx3api_ticket": {
+    "description": "推栏标识",
+    "type": "string",
+    "default": "",
+    "hint": "通过抓包推栏APP账号登录信息获取推栏标识。"
+  },
+  "jx3api_wss": {
+    "description": "事件通道地址",
+    "type": "string",
+    "default": "wss://socket.nicemoe.cn",
+    "hint": "事件推送的WebSocket地址。"
+  },
+  "jx3api_wss_token": {
+    "description": "事件推送令牌",
+    "type": "string",
+    "default": "",
+    "hint": "用于付费事件推送，不填写只推送免费事件。"
+  },
+  "tls_verify": {
+    "description": "TLS 证书验证",
+    "type": "bool",
+    "default": true,
+    "hint": "验证 JX3API、JX3BOX 和事件推送连接的 TLS 证书。建议保持开启；仅在受信任的调试环境中临时关闭。"
+  },
+  "team_management": {
+    "description": "团队管理",
+    "type": "object",
+    "items": {
+      "view_output": {
+        "description": "查看团队输出方式",
+        "type": "string",
+        "options": [
+          "图片",
+          "文本"
+        ],
+        "default": "图片",
+        "hint": "控制“查看团队”指令使用图片还是纯文本回复。"
+      },
+      "blacklist_provider": {
+        "description": "黑本模型配置",
+        "type": "string",
+        "default": "",
+        "_special": "select_provider",
+        "hint": "团队黑本使用的 AstrBot 对话模型；留空时使用当前会话的默认对话模型。"
+      },
+      "blacklist_prompt": {
+        "description": "黑本提示词",
+        "type": "text",
+        "default": "你是剑网3团队管理助手。请从团队成员中选择一名加入团队黑本。必须且只能选择团队数据中真实存在的一个角色，并严格使用以下格式回复：\n角色名：角色名称\n理由：简短明确的理由\n理由需要主要结合该成员的角色名称、不要参考心法、职责或老板标记，不要编造团队数据中不存在的信息，也不要输出其他内容。",
+        "hint": "此提示词会与指定团队的基本信息及完整成员数据拼接后统一发送给模型。"
+      }
+    }
+  },
+  "image_render_quality": {
+    "description": "图片渲染质量",
+    "type": "object",
+    "items": {
+      "device_scale_factor": {
+        "description": "渲染清晰度",
+        "type": "string",
+        "options": [
+          "1.0",
+          "1.3",
+          "1.8"
+        ],
+        "default": "1.0",
+        "hint": "数值越高越清晰，同时图片更大、渲染耗时更多。"
+      },
+      "format": {
+        "description": "输出格式",
+        "type": "string",
+        "options": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "hint": "JPEG 文件通常更小；PNG 为无损格式但文件更大。透明背景的特殊页面仍会自动使用 PNG。"
+      },
+      "jpeg_quality": {
+        "description": "JPEG 质量",
+        "type": "int",
+        "default": 100,
+        "slider": {
+          "min": 1,
+          "max": 100,
+          "step": 1
+        },
+        "hint": "仅输出格式为 JPEG 时生效；数值越高细节越完整，文件也越大。"
+      }
+    }
+  }
+}

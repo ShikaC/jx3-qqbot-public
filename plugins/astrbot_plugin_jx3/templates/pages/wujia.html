@@ -1,0 +1,116 @@
+{# template-title: {{ name }} - 万宝楼行情 #}
+{# template-components: data-table #}
+
+
+{#
+    先根据分组名称识别对应数据。
+
+    查询区服不固定使用 list[3]：
+    除电信区、双线区、无界区、公示期、在售期外，
+    其他分组都视为查询区服。
+
+    即使某个分组不存在，对应表格区域仍然会显示。
+#}
+
+{% set ns = namespace(
+    notice=none,
+    sale=none,
+    query=none,
+    telecom=none,
+    dual=none,
+    boundless=none
+) %}
+
+{% for group in list %}
+    {% if group.name == "公示期" %}
+        {% set ns.notice = group %}
+
+    {# 当前接口返回“在售期”，同时兼容历史名称“出售期”。 #}
+    {% elif group.name in ["在售期", "出售期"] %}
+        {% set ns.sale = group %}
+
+    {% elif group.name == "电信区" %}
+        {% set ns.telecom = group %}
+
+    {% elif group.name == "双线区" %}
+        {% set ns.dual = group %}
+
+    {% elif group.name == "无界区" %}
+        {% set ns.boundless = group %}
+
+    {% elif ns.query is none %}
+        {% set ns.query = group %}
+    {% endif %}
+{% endfor %}
+
+
+<div class="container">
+
+    <h1>
+        {{ name }}
+        {% if alias %}
+            （{{ alias }}）
+        {% endif %}
+    </h1>
+
+    {% if view %}
+    <img
+        src="{{ view }}"
+        alt="{{ name }}"
+        class="goods-image"
+    >
+    {% endif %}
+
+    {% if desc %}
+    <p class="goods-desc">{{ desc }}</p>
+    {% endif %}
+
+    <div class="meta-row">
+        <span>分类：{{ category }}</span>
+        <span>发售时间：{{ date }}</span>
+        <span class="price">参考价格：{{ retail }} 元</span>
+    </div>
+
+    {% set sale_labels = {1: '出售', 2: '收购', 3: '想出', 4: '想收', 5: '成交', 6: '正出', 7: '公示'} %}
+    {% set sections = [
+        ('notice', '万宝楼公示', ns.notice, '公示', '暂无公示数据'),
+        ('sale', '万宝楼在售', ns.sale, '在售', '暂无在售数据'),
+        ('query', '查询区服' ~ ('：' ~ ns.query.name if ns.query else ''), ns.query, '', '暂无查询区服数据'),
+        ('', '电信区', ns.telecom, '', '暂无电信区数据'),
+        ('', '双线区', ns.dual, '', '暂无双线区数据'),
+        ('', '无界区', ns.boundless, '', '暂无无界区数据')
+    ] %}
+    <div class="market-table-grid">
+        {% for style, title, group, status, empty_text in sections %}
+        <div class="table-card {{ style }}">
+            <div class="table-title">{{ title }}</div>
+            <div class="table-scroll">
+                <table class="data-table data-table--nowrap">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>服务器</th>
+                            <th>价格</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if group and group.list %}
+                        {% for item in group.list %}
+                        <tr>
+                            <td>{{ item.date }}</td>
+                            <td class="server-col">{{ item.server }}</td>
+                            <td class="price-col">{{ item.value }} 元</td>
+                            <td class="server-col">{{ status or sale_labels.get(item.sale, '未知') }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr><td colspan="4" class="empty-row">{{ empty_text }}</td></tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

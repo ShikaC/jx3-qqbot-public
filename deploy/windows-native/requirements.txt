@@ -1,0 +1,8 @@
+# AstrBot 版本与本机已验证版本保持一致；升级前先在本机测试。
+astrbot==4.29.4
+
+# astrbot_plugin_jx3 的运行依赖
+matplotlib
+aiofiles
+aiosqlite
+aiohttp

@@ -1,0 +1,13 @@
+# Keep LF for shell/Docker/YAML/Python sources so Linux deployments stay stable.
+*.sh text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+
+# PowerShell 5.1 requires UTF-8 BOM for non-ASCII scripts; files are written with BOM.
+*.ps1 text eol=crlf
+
+# Windows helper scripts
+*.bat text eol=crlf
+*.cmd text eol=crlf
