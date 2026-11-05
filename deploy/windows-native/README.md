@@ -26,7 +26,7 @@
 | `start.ps1` | 写配置 → 起 AstrBot → 起 NapCat，并打印两个 WebUI 地址 |
 | `stop.ps1` | 只停本项目的 AstrBot / NapCat / QQ |
 | `status.ps1` | 查看端口、进程与 WebUI 端口 |
-| `install-fork-plugin.ps1` | 从 `ShikaC/astrbot_plugin_jx3` 的 `feature/feature-switch` 下载修改版插件 |
+| `install-fork-plugin.ps1` | 从 `ShikaC/astrbot_plugin_jx3` 的 `feature/feature-switch@76a1c611` 下载修改版插件 |
 | `install-autostart.ps1` | 注册登录自启计划任务 |
 | `uninstall-autostart.ps1` | 取消自启 |
 | `watchdog-napcat.ps1` | NapCat 掉线看门狗（可选） |
@@ -65,8 +65,8 @@ powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\install-fork-pl
 
 - 面向本机的 `.ps1` 必须保存为 **UTF-8 带 BOM**，否则 Windows PowerShell 5.1
   会把中文读成乱码并解析失败。
-- 剑三插件从 `ShikaC/astrbot_plugin_jx3` 的 `feature/feature-switch` 下载修改版；
-  它基于上游项目，保留原作者与 AGPL-3.0 许可证。
+- 剑三插件从 `ShikaC/astrbot_plugin_jx3` 的 `feature/feature-switch@76a1c611`
+  固定提交下载修改版；它基于上游项目，保留原作者与 AGPL-3.0 许可证。
 - 改了 `ONEBOT_WS_TOKEN` 后，NapCat 需要重启才会用上新令牌。
 - AstrBot 的「更新插件」可能用上游默认分支覆盖修改版；覆盖后运行
   `install-fork-plugin.ps1` 恢复。已有的功能开关配置不会被安装脚本清除。

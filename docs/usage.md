@@ -3,8 +3,9 @@
 本文档面向第一次接触 QQ 机器人的用户。安装步骤见根目录 `README.md`。
 
 本项目安装 [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3)
-的 `feature/feature-switch` 修改版。它基于上游 `qsc20001102/astrbot_plugin_jx3`
-修改，新增逐条功能开关，并保留原作者与 AGPL-3.0 许可证。
+的 `feature/feature-switch@76a1c611` 修改版。它基于上游
+`qsc20001102/astrbot_plugin_jx3` 修改，新增逐条功能开关，并保留原作者与
+AGPL-3.0 许可证。
 
 ## 1. 安装后发生了什么
 
@@ -142,4 +143,4 @@ AI 是否回话由 AstrBot 的唤醒规则决定。如果觉得频繁，可以�
 powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\install-fork-plugin.ps1
 ```
 
-该脚本会恢复 fork 的 `feature/feature-switch` 修改版，不会清除已有的功能开关配置。
+该脚本会恢复 fork 的 `feature/feature-switch@76a1c611` 修改版，不会清除已有的功能开关配置。
