@@ -48,7 +48,8 @@ PS：如果你觉得该项目有用，希望能点一个Star~
 - **本地数据**：团队、避雷、区服绑定等数据保存在本机，不依赖外部数据库。
 
 > 本项目默认安装 [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3)
-> 的 `feature/feature-switch` 修改版；它基于上游 AGPL-3.0 项目，并保留原作者信息。
+> 的 `feature/feature-switch` 修改版，并固定到已验证提交
+> `76a1c611`；它基于上游 AGPL-3.0 项目，并保留原作者信息。
 
 ## 快速开始
 
@@ -83,7 +84,7 @@ PS：如果你觉得该项目有用，希望能点一个Star~
    - 初始化 `.runtime/astrbot` 实例；
    - 下载并配置 NapCat；
    - 生成 `deploy/windows-native/.env`；
-   - 下载并安装 fork 的 `feature/feature-switch` 修改版剑三插件；
+   - 下载并安装固定到 `76a1c611` 的 fork 修改版剑三插件；
    - 写入配置，并启动 AstrBot 与 NapCat。
 
    首次安装需要下载约 1–2 GB 依赖和 300–400 MB 协议端，耗时取决于网络。
@@ -118,7 +119,8 @@ PS：如果你觉得该项目有用，希望能点一个Star~
 
 安装脚本从
 [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3)
-的 `feature/feature-switch` 分支下载修改版插件。修改版新增了逐条功能开关，
+的 `feature/feature-switch` 分支下载固定提交 `76a1c611` 的修改版插件。
+修改版新增了逐条功能开关，
 默认全部开启；管理页中的“功能开关”位于“会话控制”之后、“事件推送”之前。
 
 插件基于上游
@@ -276,17 +278,22 @@ NapCat 的实际运行目录以 `.env` 中的 `NAPCAT_ROOT` 为准，通常位�
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 -CheckOnly
 git diff --check
+python -m compileall -q deploy/windows-native plugins/astrbot_plugin_jx3
+Push-Location .\plugins\astrbot_plugin_jx3
+python -m unittest discover -s tests -v
+Pop-Location
 ```
 
-插件快照可通过 `deploy/windows-native/install-fork-plugin.ps1` 从 fork 分支恢复；
-功能开关目录的单元测试位于 `plugins/astrbot_plugin_jx3/tests/test_features.py`。
+插件快照可通过 `deploy/windows-native/install-fork-plugin.ps1` 从固定提交恢复。
+单元测试需要先安装 `plugins/astrbot_plugin_jx3/requirements.txt` 和 `jinja2`；
+测试文件位于 `plugins/astrbot_plugin_jx3/tests/`。
 
 ## 第三方组件与许可证
 
 | 组件 | 用途 | 许可证 |
 |---|---|---|
 | [AstrBot](https://github.com/AstrBotDevs/AstrBot) | 机器人框架 | AGPL-3.0 |
-| [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3) | 剑网 3 数据查询插件修改版（`feature/feature-switch`，基于上游） | AGPL-3.0 |
+| [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3) | 剑网 3 数据查询插件修改版（`feature/feature-switch@76a1c611`，基于上游） | AGPL-3.0 |
 | [NapCatQQ](https://github.com/NapNeko/NapCatQQ) | QQ 协议端，按原样运行 | Limited Redistribution License |
 | [JX3API](https://www.jx3api.com/) | 剑网 3 数据接口 | 服务方条款 |
 | [JX3BOX](https://www.jx3box.com/) | 配装数据接口 | 服务方条款 |
@@ -294,6 +301,8 @@ git diff --check
 本仓库按 **AGPL-3.0** 发布。再分发时请保留根目录 `LICENSE`、插件
 `LICENSE` 及相关版权声明，并按 AGPL 提供对应源码。NapCat 不得修改或重新打包。
 完整说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+
+安全问题请按 [SECURITY.md](SECURITY.md) 的私密渠道报告。
 
 ## 免责声明
 

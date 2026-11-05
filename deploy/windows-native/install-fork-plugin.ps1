@@ -28,11 +28,11 @@ $EnvFile = [System.IO.Path]::GetFullPath($EnvFile)
 
 . (Join-Path $PSScriptRoot 'common.ps1')
 
-# 修改版插件来源。功能开关位于 feature/feature-switch 分支；
-# 如需固定到某个提交或标签，请把 $PluginRef 改成对应值并重新验证下载地址。
+# 修改版插件来源。这里固定到已验证的 feature/feature-switch 提交，
+# 避免分支后续变化导致安装结果不可复现；升级前先验证新提交。
 $PluginRepo = 'ShikaC/astrbot_plugin_jx3'
-$PluginRef = 'feature/feature-switch'
-$ArchiveUrl = "https://codeload.github.com/$PluginRepo/zip/refs/heads/$PluginRef"
+$PluginRef = '76a1c611e2acc5807fd1454aef41a7e9c7c2401a'
+$ArchiveUrl = "https://codeload.github.com/$PluginRepo/zip/$PluginRef"
 
 $repoRoot = Get-RepoRoot
 $config = Read-DotEnv -Path $EnvFile

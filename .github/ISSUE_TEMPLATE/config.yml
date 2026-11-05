@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 私密报告安全漏洞
+    url: https://github.com/ShikaC/jx3-qqbot-public/security/advisories/new
+    about: 不要在公开 Issue 中提交密钥、登录态或未修复漏洞

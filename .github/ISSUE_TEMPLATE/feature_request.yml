@@ -1,0 +1,31 @@
+name: 功能建议
+description: 建议新增或改进功能
+title: "[Feature] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 想解决的问题
+      description: 当前哪里不方便，或什么场景无法完成？
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+      description: 描述期望行为；如果涉及上游插件，请说明能否在上游实现。
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 可替代方案
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其他信息

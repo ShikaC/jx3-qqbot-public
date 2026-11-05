@@ -1,0 +1,49 @@
+name: 问题反馈
+description: 报告安装、运行、查询或管理页问题
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请勿提交 API Key、JX3API Token、QQ 登录态、密码、真实群号或未脱敏日志。
+        安全漏洞请按照 SECURITY.md 使用私密渠道报告。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 问题描述
+      description: 实际发生了什么，期望发生什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 执行 ...
+        2. 打开 ...
+        3. 发送 ...
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: 运行环境
+      description: Windows 版本、AstrBot 版本、插件版本或提交、NapCat 版本
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 脱敏日志或截图
+      description: 删除 Token、QQ 号、群号、服务器地址和个人路径后再粘贴
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其他信息

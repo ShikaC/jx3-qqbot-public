@@ -8,7 +8,7 @@
 | 组件 | 来源 | 许可证 | 本项目如何处理 |
 |---|---|---|---|
 | AstrBot | <https://github.com/AstrBotDevs/AstrBot> | AGPL-3.0 | 只安装官方 PyPI 包，不修改源码 |
-| astrbot_plugin_jx3 | <https://github.com/ShikaC/astrbot_plugin_jx3>（基于 <https://github.com/qsc20001102/astrbot_plugin_jx3>） | AGPL-3.0 | 使用 `feature/feature-switch` 修改版；保留原作者、上游链接、`LICENSE` 与版权声明 |
+| astrbot_plugin_jx3 | <https://github.com/ShikaC/astrbot_plugin_jx3>（基于 <https://github.com/qsc20001102/astrbot_plugin_jx3>） | AGPL-3.0 | 使用 `feature/feature-switch@76a1c611` 修改版；保留原作者、上游链接、`LICENSE` 与版权声明 |
 | NapCatQQ | <https://github.com/NapNeko/NapCatQQ> | Limited Redistribution License（非开源） | **不修改**，只按原样运行 |
 | JX3API | <https://www.jx3api.com/> | 按其官网条款 | 只调用接口，不复制数据 |
 | JX3BOX | <https://www.jx3box.com/> | 按其官网条款 | 只调用接口 |
@@ -16,8 +16,9 @@
 
 ## 游戏素材与第三方资源
 
-本仓库在 `plugins/astrbot_plugin_jx3/templates/` 下随插件保留了约 285 个门派、
-心法、奇遇、沙盘、阵营等图片资源，主要位于：
+本仓库在 `plugins/astrbot_plugin_jx3/templates/` 下随插件保留了 284 张门派、
+心法、奇遇、沙盘、阵营等模板图片，另有 1 张插件 logo，合计 285 张图片。
+模板图片主要位于：
 
 - `templates/sect/`
 - `templates/serendipity/`
@@ -36,7 +37,8 @@
 - AstrBot 与 `astrbot_plugin_jx3` 都是 AGPL-3.0。再分发本仓库时，请保留
   根目录 `LICENSE`、`plugins/astrbot_plugin_jx3/LICENSE` 与相关版权声明，
   并按 AGPL 提供对应源码。`plugins/astrbot_plugin_jx3/` 是 fork 修改版快照，
-  原作者信息与上游链接均保留；安装脚本从 fork 的 `feature/feature-switch` 下载。
+  原作者信息与上游链接均保留；安装脚本从 fork 的
+  `feature/feature-switch@76a1c611` 固定提交下载。
 - NapCat 采用 Limited Redistribution License，条款禁止修改（modification），
   只允许按原样使用 / 分发。请不要修改、patch 或重新打包 NapCat。
 - JX3API、JX3BOX、LLM 服务的可用性、数据准确性与计费规则由各自提供方决定，
