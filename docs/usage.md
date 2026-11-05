@@ -2,8 +2,9 @@
 
 本文档面向第一次接触 QQ 机器人的用户。安装步骤见根目录 `README.md`。
 
-本项目只安装上游 `qsc20001102/astrbot_plugin_jx3` 的**原版插件**，不修改插件
-源码，也不提供额外管理页。插件可在 AstrBot 后台正常更新。
+本项目安装 [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3)
+的 `feature/feature-switch` 修改版。它基于上游 `qsc20001102/astrbot_plugin_jx3`
+修改，新增逐条功能开关，并保留原作者与 AGPL-3.0 许可证。
 
 ## 1. 安装后发生了什么
 
@@ -41,7 +42,7 @@ jx3-qqbot/
 
 也可以直接在网页里改：打开 AstrBot 管理后台（`http://127.0.0.1:6185`）→
 插件 → **剑网三插件管理** → **配置**，修改 JX3API Token；LLM API Key 在
-AstrBot 的模型服务配置中修改。这里使用的是上游插件自带配置表单。
+AstrBot 的模型服务配置中修改。插件配置表单和功能开关都在插件管理页中。
 
 ### 换用其它 LLM
 
@@ -70,20 +71,20 @@ powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 `
 之后直接发指令，例如：
 
 ```text
-指令 剑三
-信息 梦江南 某某角色
+功能
+角色 梦江南 某某角色
 属性 梦江南 某某角色
 资历 梦江南 某某角色
 奇遇 梦江南 某某角色
 物价 五行石 梦江南
 沙盘 梦江南
-新闻公告
+新闻
 ```
 
 ### AI 聊天
 
-是否让 AI 回话由 AstrBot 自己的唤醒规则和模型配置决定。本仓库不会修改插件来
-接管聊天消息。可在 AstrBot 管理后台设置唤醒前缀、会话开关，或只允许群内
+是否让 AI 回话由 AstrBot 自己的唤醒规则和模型配置决定。插件不会接管聊天消息。
+可在 AstrBot 管理后台设置唤醒前缀、会话开关，或只允许群内
 `@机器人` 时触发对话。
 
 机器人的人格（说话风格）可以在 `deploy/config/default-persona.txt` 里修改，
@@ -97,7 +98,8 @@ powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 `
 - 查看/修改模型与人格
 - 查看会话、日志、插件状态
 - 停用/启用插件
-- 进入「插件 → 剑网三插件管理 → 配置」，调整上游插件自带配置
+- 进入「插件 → 剑网三插件管理」，在“配置”中调整 Token 等设置
+- 在“功能开关”中按分类、分组或逐条指令启停功能；默认全部开启
 
 密码保存在 `deploy\windows-native\.env` 的 `ASTRBOT_DASHBOARD_PASSWORD`。
 
@@ -117,7 +119,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 `
 ### 查询提示失败
 
 - 确认 JX3API Token 正确、剩余次数足够。
-- 免费接口（如 `新闻公告`）不消耗次数，可以先用它测试链路。
+- 免费接口（如 `新闻`、`维护`）不消耗次数，可以先用它测试链路。
 - 网络不稳定时脚本会自动重试；仍失败可稍后再试。
 
 ### 想让机器人少说话 / 多说话
@@ -134,11 +136,10 @@ AI 是否回话由 AstrBot 的唤醒规则决定。如果觉得频繁，可以�
 ## 7. 如何更新剑三插件
 
 打开 AstrBot 管理后台 → 插件 → **剑网三插件管理**，使用 AstrBot 自带的
-「更新插件」功能即可。安装内容来自上游原版，本仓库没有覆盖安装步骤，因此更新
-不会触发任何本地插件扩展。
-
-如需重新安装一遍原版插件，也可以运行：
+「更新插件」可能用上游默认分支覆盖修改版，导致功能开关消失。更新后请运行：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\install-original-plugin.ps1
+powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\install-fork-plugin.ps1
 ```
+
+该脚本会恢复 fork 的 `feature/feature-switch` 修改版，不会清除已有的功能开关配置。

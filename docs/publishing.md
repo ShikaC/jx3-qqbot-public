@@ -6,7 +6,7 @@
 
 - [ ] `README.md` 里的仓库地址和所有者已替换为实际地址
 - [ ] 根 `LICENSE`、插件 `LICENSE`、`THIRD_PARTY_NOTICES.md` 都在
-- [ ] `plugins/astrbot_plugin_jx3/` 与上游 `main` 一致，没有本地扩展文件或改动
+- [ ] `plugins/astrbot_plugin_jx3/` 与 fork 的 `feature/feature-switch` 分支一致
 - [ ] 文档中没有真实 Key、QQ 号、群号或本机绝对路径
 
 ## 2. 隐私与产物
@@ -20,11 +20,12 @@ git log -p | Select-String -Pattern 'token|key|password|qq|群号'
 
 ## 3. 验证
 
-- [ ] 用 Python 3.12 编译 `deploy/windows-native/configure_instance.py` 和上游插件快照
+- [ ] 用 Python 3.12 编译 `deploy/windows-native/configure_instance.py` 和 fork 插件快照
 - [ ] 所有 `.ps1` 能通过 PowerShell 解析
 - [ ] 在干净 Windows 环境运行 `install.cmd`，或至少运行：`powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 -CheckOnly`
-- [ ] 安装时只下载上游原版剑三插件，没有调用插件同步脚本或写入额外插件配置
-- [ ] 在 AstrBot 后台点一次「更新插件」，确认没有本地扩展页面或配置字段出现
+- [ ] 安装时从 `ShikaC/astrbot_plugin_jx3` 的 `feature/feature-switch` 下载修改版
+- [ ] 功能开关默认全部开启，逐条关闭后对应指令不再注册
+- [ ] 重新运行配置脚本后，已有 `features` 功能开关配置仍然保留
 - [ ] 安装脚本会校验 NapCat v4.18.42 的 SHA-256，并校验 Python 安装器的数字签名
 
 ## 4. 发布

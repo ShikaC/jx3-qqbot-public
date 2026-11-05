@@ -28,11 +28,11 @@ $EnvFile = [System.IO.Path]::GetFullPath($EnvFile)
 
 . (Join-Path $PSScriptRoot 'common.ps1')
 
-# 原版插件来源。默认分支名以实际为准；如需固定到某个提交/标签，
-# 请把 $UpstreamRef 改成对应值并重新验证下载地址。
-$UpstreamRepo = 'qsc20001102/astrbot_plugin_jx3'
-$UpstreamRef = 'main'
-$ArchiveUrl = "https://codeload.github.com/$UpstreamRepo/zip/refs/heads/$UpstreamRef"
+# 修改版插件来源。功能开关位于 feature/feature-switch 分支；
+# 如需固定到某个提交或标签，请把 $PluginRef 改成对应值并重新验证下载地址。
+$PluginRepo = 'ShikaC/astrbot_plugin_jx3'
+$PluginRef = 'feature/feature-switch'
+$ArchiveUrl = "https://codeload.github.com/$PluginRepo/zip/refs/heads/$PluginRef"
 
 $repoRoot = Get-RepoRoot
 $config = Read-DotEnv -Path $EnvFile
@@ -43,7 +43,7 @@ $storeDir = Join-Path $astrbotRoot 'data\plugins'
 $targetDir = Join-Path $storeDir 'astrbot_plugin_jx3'
 $runtimeRoot = Join-Path $repoRoot '.runtime'
 $downloadRoot = Join-Path $runtimeRoot 'downloads'
-$extractRoot = Join-Path $runtimeRoot 'astrbot-plugin-upstream'
+$extractRoot = Join-Path $runtimeRoot 'astrbot-plugin-fork'
 
 function Assert-UnderRoot {
     param(
@@ -66,9 +66,10 @@ function Remove-DirectoryTree {
 }
 
 New-Item -ItemType Directory -Path $downloadRoot -Force | Out-Null
-$archive = Join-Path $downloadRoot "astrbot_plugin_jx3-$UpstreamRef.zip"
+$archiveRef = $PluginRef.Replace('/', '-')
+$archive = Join-Path $downloadRoot "astrbot_plugin_jx3-$archiveRef.zip"
 
-Write-Host "下载原版剑三插件：$ArchiveUrl"
+Write-Host "下载修改版剑三插件：$ArchiveUrl"
 Invoke-WebRequest -Uri $ArchiveUrl -OutFile $archive -UseBasicParsing -TimeoutSec 300
 if ((Get-Item -LiteralPath $archive).Length -le 0) {
     throw "下载内容为空：$ArchiveUrl"
@@ -89,7 +90,7 @@ New-Item -ItemType Directory -Path $storeDir -Force | Out-Null
 Assert-UnderRoot -Path $targetDir -Root $storeDir -Label '插件目录' | Out-Null
 $backupPath = $null
 if (Test-Path -LiteralPath $targetDir) {
-    $backupPath = Join-Path $astrbotRoot ('.plugin-deploy\backups\original-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+    $backupPath = Join-Path $astrbotRoot ('.plugin-deploy\backups\fork-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
     New-Item -ItemType Directory -Path (Split-Path -Parent $backupPath) -Force | Out-Null
     Move-Item -LiteralPath $targetDir -Destination $backupPath
     Write-Host "已把旧插件目录备份到：$backupPath"
@@ -98,10 +99,11 @@ if (Test-Path -LiteralPath $targetDir) {
 Move-Item -LiteralPath $extracted.FullName -Destination $targetDir
 
 Write-Host ''
-Write-Host '原版剑三插件已安装（未做任何修改）：' -ForegroundColor Green
+Write-Host '修改版剑三插件已安装：' -ForegroundColor Green
 Write-Host "  $targetDir"
-Write-Host '来源：https://github.com/qsc20001102/astrbot_plugin_jx3'
-Write-Host '该目录与上游原版一致，可直接在 AstrBot 后台点「更新插件」升级。'
+Write-Host "来源：https://github.com/$PluginRepo/tree/$PluginRef"
+Write-Host '基于上游 qsc20001102/astrbot_plugin_jx3 修改，保留原作者与 AGPL-3.0 许可。'
+Write-Host 'AstrBot 自带的「更新插件」可能用上游默认分支覆盖修改版；覆盖后请重新运行本脚本。'
 if (-not $NoReload) {
     Write-Host '重启或重载 AstrBot 后生效。'
 }

@@ -40,10 +40,13 @@ PS：如果你觉得该项目有用，希望能点一个Star~
   配装、资讯等 100+ 条中文指令。
 - **群内 AI 聊天（可选）**：由 AstrBot 自身提供模型和唤醒规则；本仓库不改插件
   来接管聊天消息。
+- **逐条功能开关**：在插件管理页按 JX3API 分类启用或停用每条指令；默认全部
+  开启，关闭后机器人不再响应，也不会消耗 JX3API 调用次数。
 - **小团体工具**：按 QQ 群隔离的团队报名、黑本和避雷记录。
 - **本地数据**：团队、避雷、区服绑定等数据保存在本机，不依赖外部数据库。
 
-> 剑三插件始终安装上游原版，不包含本仓库额外添加的功能页面或插件源码改动。
+> 本项目默认安装 [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3)
+> 的 `feature/feature-switch` 修改版；它基于上游 AGPL-3.0 项目，并保留原作者信息。
 
 ## 快速开始
 
@@ -78,7 +81,7 @@ PS：如果你觉得该项目有用，希望能点一个Star~
    - 初始化 `.runtime/astrbot` 实例；
    - 下载并配置 NapCat；
    - 生成 `deploy/windows-native/.env`；
-   - 从上游下载并安装未修改的剑三插件，后续可直接在 AstrBot 中更新；
+   - 下载并安装 fork 的 `feature/feature-switch` 修改版剑三插件；
    - 写入配置，并启动 AstrBot 与 NapCat。
 
    首次安装需要下载约 1–2 GB 依赖和 300–400 MB 协议端，耗时取决于网络。
@@ -106,35 +109,40 @@ PS：如果你觉得该项目有用，希望能点一个Star~
    绑定区服 梦江南
    ```
 
-   将 `梦江南` 替换为实际区服。之后可直接发送查询指令，或发送 `指令 剑三`
+   将 `梦江南` 替换为实际区服。之后可直接发送查询指令，或发送 `功能`
    查看速查表。
 
 ### 插件来源
 
-安装脚本只从上游
-[qsc20001102/astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3)
-的 `main` 分支下载原版插件，不在安装后写入额外功能或替换插件文件。因此可以
-直接在 AstrBot 后台点「更新插件」，不需要重新运行本项目安装脚本，也不会产生
-本仓库添加的页面、配置字段或额外功能。
+安装脚本从
+[ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3)
+的 `feature/feature-switch` 分支下载修改版插件。修改版新增了逐条功能开关，
+默认全部开启；管理页中的“功能开关”位于“会话控制”之后、“事件推送”之前。
 
-仓库中的 `plugins/astrbot_plugin_jx3/` 是同一上游版本的未修改快照，仅用于保留
-许可证、图标和源码审阅，不是本仓库维护的二次开发分支。
+插件基于上游
+[qsc20001102/astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3)
+修改，原作者、上游链接和 AGPL-3.0 许可证均保留。仓库中的
+`plugins/astrbot_plugin_jx3/` 是修改版快照，与上述 fork 分支保持一致。
+
+> **更新提示**：fork 的 `metadata.yaml` 仍指向上游仓库，AstrBot 自带的
+> 「更新插件」可能用上游默认分支覆盖修改版。更新后若功能开关消失，请重新运行
+> `install.cmd`，或单独运行 `deploy/windows-native/install-fork-plugin.ps1`。
 
 ### 常用指令
 
 | 场景 | 指令示例 |
 |---|---|
-| 角色信息 | `信息 [区服] <角色名>` |
-| 属性与装备 | `属性 [区服] <角色名>`、`装备 [区服] <角色名>` |
-| 资历与成就 | `资历 [区服] <角色名>`、`成就 [区服] <角色名> <成就名>` |
-| 奇遇 | `奇遇 [区服] <角色名>`、`未出 [区服] <角色名>` |
+| 角色信息 | `角色 <区服> <角色名>` |
+| 属性与装备 | `属性 <区服> <角色名>`、`装备 <区服> <角色名>` |
+| 资历与成就 | `资历 <区服> <角色名>`、`成就 <区服> <角色名> <成就名>` |
+| 奇遇 | `奇遇 <区服> <角色名>`、`未出 <区服> <角色名>` |
 | 物价 | `物价 <物品名> [区服]` |
-| 服务器 | `沙盘 [区服]`、`开服 [区服]` |
+| 服务器 | `沙盘 <区服>`、`开服 <区服>` |
 | 配装 | `配装 <心法> [类型] [资料片]` |
 | 本群设置 | `绑定区服 <区服名>`、`解绑区服` |
-| 帮助 | `指令 剑三 [关键词]`、`功能` |
+| 帮助 | `功能` |
 
-完整指令列表见 [使用说明](docs/usage.md)，或直接在群内发送 `指令 剑三`。
+完整指令列表见 [使用说明](docs/usage.md)，或直接在群内发送 `功能`。
 
 ## 日常运维
 
@@ -152,12 +160,14 @@ PS：如果你觉得该项目有用，希望能点一个Star~
 
 ## 配置
 
-剑三插件使用上游自带的 AstrBot 插件配置页，本仓库没有额外的配置向导或功能
-开关页面。需要更换 JX3API Token、事件推送令牌或图片渲染设置时，可在
-AstrBot 管理后台 → 插件 → **剑网三插件管理** → **配置** 中修改。
+在 AstrBot 管理后台 → 插件 → **剑网三插件管理** 中，可以：
 
-如果重新运行 `install.cmd`，脚本仍会从上游重新安装原版插件，并写入本项目需要的
-JX3API Token 和图片渲染默认值；这些操作不会修改插件源码。
+- 在“配置”里修改 JX3API Token、事件推送令牌和图片渲染设置；
+- 在“功能开关”里按 JX3API 分类、分组或逐条指令开关功能，默认全部开启；
+- 点击分类卡片可收起或展开；在大类或分组外勾选可全选该类指令。
+
+重新运行 `install.cmd` 会重新安装 fork 修改版，并写入 JX3API Token 与图片渲染
+默认值，但不会清除已经保存的 `features` 功能开关配置。
 
 ### 更换 LLM 服务
 
@@ -185,7 +195,7 @@ QQ 客户端 / QQ 群
         │  OneBot v11，本机回环 127.0.0.1:6199
         ▼
    AstrBot 4.29.4
-        ├── 剑网 3 查询插件（上游原版 astrbot_plugin_jx3）
+        ├── 剑网 3 查询插件（fork 修改版，含逐条功能开关）
         └── LLM Provider（可选，由 AstrBot 自身配置）
 ```
 
@@ -198,7 +208,7 @@ jx3-qqbot-public/
 │   ├── config/default-persona.txt
 │   └── windows-native/           # Windows 安装、运行与维护脚本
 ├── docs/                         # 使用说明、FAQ 与发布检查
-└── plugins/astrbot_plugin_jx3/   # 上游原版未修改快照（AGPL-3.0）
+└── plugins/astrbot_plugin_jx3/   # fork 修改版快照（AGPL-3.0）
 ```
 
 运行后会生成以下本地目录，它们不会进入 Git：
@@ -212,7 +222,7 @@ deploy/windows-native/.env
 
 ## 费用与风险
 
-- **JX3API** 按调用次数计费；新闻公告等免费接口不消耗次数。
+- **JX3API** 按调用次数计费；`维护`、`新闻` 等免费接口不消耗次数。
 - **LLM** 按 token 计费，仅 AI 聊天会消耗；不填写 Key 时不会产生此项费用。
 - **QQ 账号** 使用非官方协议端存在风控风险。建议使用有正常使用记录的小号，
   仅在小群中稳定使用，避免群发、主动加好友或高频操作。
@@ -234,7 +244,7 @@ deploy/windows-native/.env
 
 **查询失败？**
 
-确认 JX3API Token 正确且剩余次数充足。可先发送免费的 `新闻公告` 检查链路。
+确认 JX3API Token 正确且剩余次数充足。可先发送免费的 `维护` 或 `新闻` 检查链路。
 
 **如何卸载？**
 
@@ -248,7 +258,7 @@ deploy/windows-native/.env
 欢迎提交 Issue 和 Pull Request。提交前请确保：
 
 - 不提交 Token、QQ 登录态、运行日志或本机绝对路径；
-- 不修改 `plugins/astrbot_plugin_jx3/`；插件功能问题请反馈给上游仓库；
+- 修改插件功能时请同步更新 fork，并保持原作者信息与 AGPL-3.0 许可证；
 - 不修改或重新打包 NapCat。
 
 ### 本地检查
@@ -260,14 +270,15 @@ powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 -Chec
 git diff --check
 ```
 
-本仓库不维护插件二次开发版本，因此不再提供插件同步或插件单元测试流程。
+插件快照可通过 `deploy/windows-native/install-fork-plugin.ps1` 从 fork 分支恢复；
+功能开关目录的单元测试位于 `plugins/astrbot_plugin_jx3/tests/test_features.py`。
 
 ## 第三方组件与许可证
 
 | 组件 | 用途 | 许可证 |
 |---|---|---|
 | [AstrBot](https://github.com/AstrBotDevs/AstrBot) | 机器人框架 | AGPL-3.0 |
-| [astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3) | 剑网 3 数据查询插件（上游原版，不修改） | AGPL-3.0 |
+| [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3) | 剑网 3 数据查询插件修改版（`feature/feature-switch`，基于上游） | AGPL-3.0 |
 | [NapCatQQ](https://github.com/NapNeko/NapCatQQ) | QQ 协议端，按原样运行 | Limited Redistribution License |
 | [JX3API](https://www.jx3api.com/) | 剑网 3 数据接口 | 服务方条款 |
 | [JX3BOX](https://www.jx3box.com/) | 配装数据接口 | 服务方条款 |

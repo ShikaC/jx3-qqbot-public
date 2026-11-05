@@ -48,11 +48,11 @@ JX3API 的充值页按「次数」售卖，令牌查询接口会显示「已用 
 | 项目 | 作用 |
 |---|---|
 | [AstrBotDevs/AstrBot](https://github.com/AstrBotDevs/AstrBot) | 机器人框架，自带 WebUI、LLM 接入、插件系统 |
-| [qsc20001102/astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3) | 剑网 3 数据插件 |
+| [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3) | 剑网 3 数据插件修改版（基于上游 `qsc20001102/astrbot_plugin_jx3`） |
 | [NapNeko/NapCatQQ](https://github.com/NapNeko/NapCatQQ) | QQ 协议端（非官方），实现 OneBot v11 |
 
-本仓库额外做了：Windows 一键安装脚本、默认群友人格和 AstrBot 整合配置。
-剑三插件本身始终使用上游原版，不维护二次开发分支。
+本仓库额外做了：Windows 一键安装脚本、默认群友人格、AstrBot 整合配置，
+以及插件 fork 中的逐条功能开关和可折叠分类管理页。
 
 ## 6. 推栏 ticket 是什么？为什么不用？
 
@@ -82,10 +82,9 @@ JX3API 把秒级实时推送划进「事件版」，官网写明不在普通购�
 
 ## 8. 机器人会对群里每句话都回吗？
 
-是否回话由 AstrBot 的唤醒规则决定，剑三插件本身使用上游原版，本仓库没有在
-插件源码里增加聊天过滤逻辑。
+是否回话由 AstrBot 的唤醒规则决定，剑三插件没有在源码里增加聊天过滤逻辑。
 
-- 剑三指令（如 `信息 梦江南 某某`）由上游插件解析。
+- 剑三指令（如 `角色 梦江南 某某`）由插件解析。
 - AI 聊天是否触发，请在 AstrBot 后台调整唤醒前缀、会话开关或 @ 规则。
 
 如果没有填写 LLM API Key，本项目默认关闭对话能力，只保留剑三查询。
@@ -97,14 +96,15 @@ JX3API 把秒级实时推送划进「事件版」，官网写明不在普通购�
 
 ## 10. 这个项目可以商用 / 二次分发吗？
 
-本仓库整体按 AGPL-3.0 发布；剑三插件来自 AGPL-3.0 的上游项目且未做修改，
-再分发时需要保留许可证与版权声明，并按 AGPL 提供对应源码。
+本仓库整体按 AGPL-3.0 发布；剑三插件基于 AGPL-3.0 的上游项目修改，
+再分发时需要保留许可证、原作者信息与版权声明，并按 AGPL 提供对应源码。
 NapCat 使用 Limited Redistribution License，**不要修改**，只能按原样运行。
 
 ## 11. 怎么更新剑三插件？
 
-直接在 AstrBot 管理后台 → 插件 → **剑网三插件管理** 中点击「更新插件」即可。
+不建议直接使用 AstrBot 的「更新插件」：fork 的元数据仍指向上游仓库，更新可能
+用上游默认分支覆盖修改版，使功能开关消失。
 
-本项目只安装上游原版，没有修改过插件源码，也没有添加额外管理页或配置字段。
-「更新插件」只会替换上游插件文件，不会产生本仓库添加的页面、配置字段或额外功能。
-更新后如需重新写入 JX3API Token 等项目默认配置，再运行一次 `install.cmd` 即可。
+更新后运行 `deploy/windows-native/install-fork-plugin.ps1` 恢复修改版；已有的
+`features` 功能开关配置会保留。也可以重新运行 `install.cmd`，同时写入 JX3API
+Token 等默认配置。

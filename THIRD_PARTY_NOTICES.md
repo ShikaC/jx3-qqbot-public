@@ -8,7 +8,7 @@
 | 组件 | 来源 | 许可证 | 本项目如何处理 |
 |---|---|---|---|
 | AstrBot | <https://github.com/AstrBotDevs/AstrBot> | AGPL-3.0 | 只安装官方 PyPI 包，不修改源码 |
-| astrbot_plugin_jx3 | <https://github.com/qsc20001102/astrbot_plugin_jx3> | AGPL-3.0 | 只安装上游原版，不修改源码；保留 `LICENSE` 与版权声明 |
+| astrbot_plugin_jx3 | <https://github.com/ShikaC/astrbot_plugin_jx3>（基于 <https://github.com/qsc20001102/astrbot_plugin_jx3>） | AGPL-3.0 | 使用 `feature/feature-switch` 修改版；保留原作者、上游链接、`LICENSE` 与版权声明 |
 | NapCatQQ | <https://github.com/NapNeko/NapCatQQ> | Limited Redistribution License（非开源） | **不修改**，只按原样运行 |
 | JX3API | <https://www.jx3api.com/> | 按其官网条款 | 只调用接口，不复制数据 |
 | JX3BOX | <https://www.jx3box.com/> | 按其官网条款 | 只调用接口 |
@@ -23,7 +23,7 @@
 - `templates/serendipity/`
 - `templates/img/`（含 `sand/`）
 
-这些资源来自上游 `qsc20001102/astrbot_plugin_jx3` 仓库，随该插件一同保留，用于
+这些资源来自上游 `qsc20001102/astrbot_plugin_jx3` 仓库，并随 fork 修改版保留，用于
 渲染 JX3API / JX3BOX 返回的游戏数据查询结果。其中可能包含《剑网3》的游戏标识、
 角色形象或界面素材，相关权利属于剑网3 的权利人；AGPL-3.0 并不当然授予这些美术
 素材的再分发或商用权利。
@@ -35,8 +35,8 @@
 
 - AstrBot 与 `astrbot_plugin_jx3` 都是 AGPL-3.0。再分发本仓库时，请保留
   根目录 `LICENSE`、`plugins/astrbot_plugin_jx3/LICENSE` 与相关版权声明，
-  并按 AGPL 提供对应源码。`plugins/astrbot_plugin_jx3/` 是上游原版的未修改
-  快照，原作者信息与上游链接均保留；安装脚本也只下载上游原版。
+  并按 AGPL 提供对应源码。`plugins/astrbot_plugin_jx3/` 是 fork 修改版快照，
+  原作者信息与上游链接均保留；安装脚本从 fork 的 `feature/feature-switch` 下载。
 - NapCat 采用 Limited Redistribution License，条款禁止修改（modification），
   只允许按原样使用 / 分发。请不要修改、patch 或重新打包 NapCat。
 - JX3API、JX3BOX、LLM 服务的可用性、数据准确性与计费规则由各自提供方决定，

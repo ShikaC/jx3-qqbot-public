@@ -190,10 +190,9 @@ def configure_astrbot(
     plugin_config["jx3api_wss"] = plugin_config.get("jx3api_wss") or DEFAULT_JX3_WSS
     plugin_config["jx3api_wss_token"] = plugin_config.get("jx3api_wss_token") or ""
     plugin_config["tls_verify"] = True
-    # 清理旧版本可能写入的非上游字段，保持配置与上游插件 schema 一致。
+    # 清理旧版本遗留字段；features 是修改版功能开关，必须保留。
     plugin_config.pop("llm_only_on_wake", None)
     plugin_config.pop("pz_current_zlp", None)
-    plugin_config.pop("features", None)
     plugin_config.setdefault(
         "team_management",
         {
