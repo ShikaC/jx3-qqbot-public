@@ -11,7 +11,7 @@
 1. 找 / 装 Python 3.10+（没有就自动下载 3.12）
 2. 建 `.venv` 并安装 AstrBot 与插件依赖
 3. 初始化 AstrBot 实例（`.runtime\astrbot`）
-4. 下载并安装 NapCat（`.runtime\onekey-install`）
+4. 下载并安装 NapCat（`.runtime\napcat-installer`）
 5. 生成 `deploy\windows-native\.env`
 6. 从 fork 下载并安装修改版剑三插件，写入 AstrBot / 插件 / LLM 配置
 7. 启动 AstrBot 与 NapCat，并打开 NapCat 登录页

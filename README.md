@@ -16,8 +16,8 @@
   <a href="#参与贡献">参与贡献</a>
 </p>
 
-> 拉取仓库 → 双击 `install.cmd` → 填写 JX3API Token 与 LLM API Key →
-> 用 QQ 小号扫码登录，即可在 QQ 群查询剑网 3 数据，并 @ 机器人聊天。
+> 拉取仓库 → 双击 `install.cmd` → 填写 JX3API Token（LLM API Key 可选） →
+> 用 QQ 小号扫码登录，即可在 QQ 群查询剑网 3 数据。
 
 本项目把 **AstrBot**、剑网 3 查询插件和 **NapCat** 组合成一套可复现的
 Windows 一键部署方案。
@@ -40,8 +40,10 @@ PS：如果你觉得该项目有用，希望能点一个Star~
   配装、资讯等 100+ 条中文指令。
 - **群内 AI 聊天（可选）**：由 AstrBot 自身提供模型和唤醒规则；本仓库不改插件
   来接管聊天消息。
-- **逐条功能开关**：在插件管理页按 JX3API 分类启用或停用每条指令；默认全部
-  开启，关闭后机器人不再响应，也不会消耗 JX3API 调用次数。
+- **逐条功能开关**：在插件管理页按官方分类（本地能力单独分组）启用或停用可配置
+  指令；所有可配置指令默认开启，`功能`、`绑定区服`、`解绑区服` 始终可用。关闭
+  查询指令后机器人不再响应，也不会消耗该指令对应的 JX3API 调用次数；实时事件
+  推送由“事件推送”页的订阅单独控制。
 - **小团体工具**：按 QQ 群隔离的团队报名、黑本和避雷记录。
 - **本地数据**：团队、避雷、区服绑定等数据保存在本机，不依赖外部数据库。
 
@@ -138,11 +140,12 @@ PS：如果你觉得该项目有用，希望能点一个Star~
 | 奇遇 | `奇遇 <区服> <角色名>`、`未出 <区服> <角色名>` |
 | 物价 | `物价 <物品名> [区服]` |
 | 服务器 | `沙盘 <区服>`、`开服 <区服>` |
-| 配装 | `配装 <心法> [类型] [资料片]` |
+| 配装 | `配装 <心法> [类型]` |
 | 本群设置 | `绑定区服 <区服名>`、`解绑区服` |
 | 帮助 | `功能` |
 
-完整指令列表见 [使用说明](docs/usage.md)，或直接在群内发送 `功能`。
+完整指令参考见插件内置说明的[“指令参考”章节](plugins/astrbot_plugin_jx3/README.md#指令参考)；
+日常使用示例见 [使用说明](docs/usage.md)，或直接在群内发送 `功能`。
 
 ## 日常运维
 
@@ -182,8 +185,10 @@ powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 `
   -Reconfigure
 ```
 
-本机凭据保存在 `deploy/windows-native/.env`，该文件已被 `.gitignore` 排除。
-不要上传、截图或提交该文件。
+NapCat WebUI、OneBot 和后台登录信息保存在 `deploy/windows-native/.env`；
+JX3API Token 保存在 `.runtime/astrbot/data/config/astrbot_plugin_jx3_config.json`，
+LLM Key 保存在 `.runtime/astrbot/data/cmd_config.json`。上述路径均已被
+`.gitignore` 排除，不要上传、截图或提交这些文件。
 
 ## 架构
 
@@ -216,9 +221,12 @@ jx3-qqbot-public/
 ```text
 .venv/                  # Python 虚拟环境
 .runtime/astrbot/       # AstrBot 实例、配置与本地数据库
-.runtime/onekey-install/# NapCat 与 QQ 协议端
+.runtime/napcat-installer/ # NapCat OneKey 解压与安装目录
 deploy/windows-native/.env
 ```
+
+NapCat 的实际运行目录以 `.env` 中的 `NAPCAT_ROOT` 为准，通常位于
+`.runtime/napcat-installer/NapCat.x.x.Shell/`。
 
 ## 费用与风险
 

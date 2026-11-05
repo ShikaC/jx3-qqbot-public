@@ -15,9 +15,9 @@ jx3-qqbot/
 ├─ .venv/                         # Python 虚拟环境（AstrBot 装在这里）
 ├─ .runtime/
 │  ├─ astrbot/                    # AstrBot 实例：配置、会话、插件数据库
-│  ├─ onekey-install/             # NapCat 与 QQ 协议端
+│  ├─ napcat-installer/           # NapCat OneKey 解压与安装目录
 │  └─ downloads/                  # 安装包缓存
-└─ deploy/windows-native/.env     # 本机凭据：端口、Token、后台密码
+└─ deploy/windows-native/.env     # 端口、OneBot/WebUI 令牌、后台密码
 ```
 
 ## 2. 日常操作
