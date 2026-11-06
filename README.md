@@ -32,6 +32,9 @@ Windows 一键部署方案。
 
 当前发布版本面向 Windows 本机部署。Linux 和 macOS 的安装方式尚未经过
 端到端验证，请勿将本 README 中的 Windows 命令直接套用到其它平台。
+
+> 相关文章：[《剑网三》- 回归鱼历 50 年，我整了个机器人供亲友“玩”](https://shika-home.pages.dev/notes/jx3-qqbot-qqbot/)
+
 PS：如果你觉得该项目有用，希望能点一个Star~
 
 ## 功能
