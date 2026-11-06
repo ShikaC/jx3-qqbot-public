@@ -278,9 +278,9 @@ NapCat 的实际运行目录以 `.env` 中的 `NAPCAT_ROOT` 为准，通常位�
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 -CheckOnly
 git diff --check
-python -m compileall -q deploy/windows-native plugins/astrbot_plugin_jx3
+py -3.12 -m compileall -q deploy/windows-native plugins/astrbot_plugin_jx3
 Push-Location .\plugins\astrbot_plugin_jx3
-python -m unittest discover -s tests -v
+py -3.12 -m unittest discover -s tests -v
 Pop-Location
 ```
 
