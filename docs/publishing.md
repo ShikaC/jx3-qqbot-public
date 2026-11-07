@@ -6,7 +6,7 @@
 
 - [ ] `README.md` 里的仓库地址和所有者已经是实际地址
 - [ ] 根 `LICENSE`、插件 `LICENSE`、`THIRD_PARTY_NOTICES.md` 都在
-- [ ] `plugins/astrbot_plugin_jx3/` 与 fork 的 `feature/feature-switch@76a1c611` 一致
+- [ ] `plugins/astrbot_plugin_jx3/` 与上游 `v3.5.5@85c4752` 一致
 - [ ] 文档中没有真实 Key、QQ 号、群号或本机绝对路径
 
 ## 2. 隐私与产物
@@ -22,29 +22,36 @@ git log --all --format='%H %an <%ae>'
 
 ## 3. 验证
 
-- [ ] 用 Python 3.12 编译 `deploy/windows-native/configure_instance.py` 和 fork 插件快照
+- [ ] 用 Python 3.12 编译 `deploy/windows-native/configure_instance.py` 和插件快照
 - [ ] 所有 `.ps1` 能通过 PowerShell 解析
-- [ ] 在 `plugins/astrbot_plugin_jx3/` 下运行 `python -m unittest discover -s tests -v`
+- [ ] 在 `plugins/astrbot_plugin_jx3/` 下运行 `py -3.12 -m unittest discover -s tests -v`
+- [ ] 在 `plugins/astrbot_plugin_jx3/` 下运行 `node --test tests/test_features_webui.js`
 - [ ] 在干净 Windows 环境运行 `install.cmd`，或至少运行：`powershell -ExecutionPolicy Bypass -File .\deploy\windows-native\setup.ps1 -CheckOnly`
-- [ ] 安装时从 `ShikaC/astrbot_plugin_jx3` 的固定提交 `76a1c611` 下载修改版
+- [ ] 安装时从 `qsc20001102/astrbot_plugin_jx3` 的固定提交 `85c4752` 下载上游 v3.5.5
 - [ ] 功能开关默认全部开启，逐条关闭后对应指令不再注册
 - [ ] 重新运行配置脚本后，已有 `features` 功能开关配置仍然保留
 - [ ] 安装脚本会校验 NapCat v4.18.42 的 SHA-256，并校验 Python 安装器的数字签名
 
 ## 4. 发布
 
-```powershell
-git push -u origin main
-```
-
-发布稳定版本时打 tag：
+`main` 已启用分支保护，变更需要通过 Pull Request 合并：
 
 ```powershell
-git tag v1.0.0
-git push origin v1.0.0
+git switch -c codex/update
+git push -u origin codex/update
+gh pr create --base main --head codex/update
 ```
 
-公开仓库后建议启用：
+PR 的 `test` 检查通过并合并后，再同步主分支并打 tag：
+
+```powershell
+git switch main
+git pull --ff-only origin main
+git tag v1.1.0
+git push origin v1.1.0
+```
+
+当前已启用：
 
 - Dependabot alerts 与 security updates
 - Secret scanning 与 push protection（若账户和仓库类型支持）

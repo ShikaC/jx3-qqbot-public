@@ -48,11 +48,11 @@ JX3API 的充值页按「次数」售卖，令牌查询接口会显示「已用 
 | 项目 | 作用 |
 |---|---|
 | [AstrBotDevs/AstrBot](https://github.com/AstrBotDevs/AstrBot) | 机器人框架，自带 WebUI、LLM 接入、插件系统 |
-| [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3) | 剑网 3 数据插件修改版（基于上游 `qsc20001102/astrbot_plugin_jx3`） |
+| [qsc20001102/astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3) | 剑网 3 数据查询插件（v3.5.5） |
 | [NapNeko/NapCatQQ](https://github.com/NapNeko/NapCatQQ) | QQ 协议端（非官方），实现 OneBot v11 |
 
 本仓库额外做了：Windows 一键安装脚本、默认群友人格、AstrBot 整合配置，
-以及插件 fork 中的逐条功能开关和可折叠分类管理页。
+以及上游插件中的逐条功能开关和可折叠分类管理页。
 
 ## 6. 推栏 ticket 是什么？为什么不用？
 
@@ -102,9 +102,7 @@ NapCat 使用 Limited Redistribution License，**不要修改**，只能按原�
 
 ## 11. 怎么更新剑三插件？
 
-不建议直接使用 AstrBot 的「更新插件」：fork 的元数据仍指向上游仓库，更新可能
-用上游默认分支覆盖修改版，使功能开关消失。
-
-更新后运行 `deploy/windows-native/install-fork-plugin.ps1` 恢复修改版；已有的
+可以使用 AstrBot 的「更新插件」，但它可能升级到尚未验证的上游版本。需要恢复
+固定版本时，运行 `deploy/windows-native/install-plugin.ps1`；已有的
 `features` 功能开关配置会保留。也可以重新运行 `install.cmd`，同时写入 JX3API
 Token 等默认配置。
