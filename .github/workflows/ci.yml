@@ -20,6 +20,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Node.js 22
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '22'
+
       - name: Check Python syntax
         shell: pwsh
         run: |
@@ -50,4 +55,11 @@ jobs:
         working-directory: plugins/astrbot_plugin_jx3
         run: |
           python -m unittest discover -s tests -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Run plugin WebUI tests
+        shell: pwsh
+        working-directory: plugins/astrbot_plugin_jx3
+        run: |
+          node --test tests/test_features_webui.js
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

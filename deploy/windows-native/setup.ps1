@@ -545,8 +545,8 @@ Write-SetupEnv `
     -DashboardPasswordValue $dashboardPassword
 Write-Host "配置已写入：$EnvFile"
 
-Write-Step '安装 fork 修改版剑三插件'
-& (Join-Path $PSScriptRoot 'install-fork-plugin.ps1') -EnvFile $EnvFile -NoReload
+Write-Step '安装剑三插件'
+& (Join-Path $PSScriptRoot 'install-plugin.ps1') -EnvFile $EnvFile -NoReload
 
 Write-Step '写入 AstrBot、LLM 与 JX3 Token 配置'
 Invoke-ConfigureInstance
@@ -596,7 +596,7 @@ Write-Host "后台密码：$dashboardPassword"
 Write-Host ''
 Write-Host '剑三查询：在群里发 `功能` 查看菜单。'
 Write-Host 'AI 聊天：是否回话由 AstrBot 自身的模型和唤醒规则决定。'
-Write-Host '剑三插件为 fork 修改版；后台「更新插件」可能覆盖功能开关，覆盖后请重新运行安装脚本。'
+Write-Host '剑三插件固定到上游已验证版本；后台「更新插件」升级后如需恢复固定版本，请重新运行安装脚本。'
 Write-Host ''
 Write-Host "本机凭据保存在：$EnvFile（不要上传、不要截图分享）"
 Write-Host '以后启动机器人：双击项目根目录的 start.cmd。'

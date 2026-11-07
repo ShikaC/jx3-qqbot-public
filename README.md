@@ -50,9 +50,10 @@ PS：如果你觉得该项目有用，希望能点一个Star~
 - **小团体工具**：按 QQ 群隔离的团队报名、黑本和避雷记录。
 - **本地数据**：团队、避雷、区服绑定等数据保存在本机，不依赖外部数据库。
 
-> 本项目默认安装 [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3)
-> 的 `feature/feature-switch` 修改版，并固定到已验证提交
-> `76a1c611`；它基于上游 AGPL-3.0 项目，并保留原作者信息。
+> 本项目默认安装上游
+> [qsc20001102/astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3)
+> 的 v3.5.5，并固定到已验证提交 `85c4752`。逐条功能开关已合并到上游，
+> 原作者信息与 AGPL-3.0 许可证均保留。
 
 ## 快速开始
 
@@ -87,7 +88,7 @@ PS：如果你觉得该项目有用，希望能点一个Star~
    - 初始化 `.runtime/astrbot` 实例；
    - 下载并配置 NapCat；
    - 生成 `deploy/windows-native/.env`；
-   - 下载并安装固定到 `76a1c611` 的 fork 修改版剑三插件；
+   - 下载并安装固定到 `85c4752` 的上游 v3.5.5 剑三插件；
    - 写入配置，并启动 AstrBot 与 NapCat。
 
    首次安装需要下载约 1–2 GB 依赖和 300–400 MB 协议端，耗时取决于网络。
@@ -121,19 +122,17 @@ PS：如果你觉得该项目有用，希望能点一个Star~
 ### 插件来源
 
 安装脚本从
-[ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3)
-的 `feature/feature-switch` 分支下载固定提交 `76a1c611` 的修改版插件。
-修改版新增了逐条功能开关，
+[qsc20001102/astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3)
+下载固定提交 `85c4752` 的上游插件 v3.5.5。逐条功能开关已合并到上游，
 默认全部开启；管理页中的“功能开关”位于“会话控制”之后、“事件推送”之前。
 
-插件基于上游
-[qsc20001102/astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3)
-修改，原作者、上游链接和 AGPL-3.0 许可证均保留。仓库中的
-`plugins/astrbot_plugin_jx3/` 是修改版快照，与上述 fork 分支保持一致。
+插件原作者、上游链接和 AGPL-3.0 许可证均保留。仓库中的
+`plugins/astrbot_plugin_jx3/` 是上游 v3.5.5 快照，与上述固定提交保持一致。
 
-> **更新提示**：fork 的 `metadata.yaml` 仍指向上游仓库，AstrBot 自带的
-> 「更新插件」可能用上游默认分支覆盖修改版。更新后若功能开关消失，请重新运行
-> `install.cmd`，或单独运行 `deploy/windows-native/install-fork-plugin.ps1`。
+> **更新提示**：安装脚本固定到已验证的上游提交，AstrBot 自带的「更新插件」
+> 可能升级到尚未验证的新版本。升级后如需恢复固定版本，请重新运行
+> `install.cmd`，或单独运行 `deploy/windows-native/install-plugin.ps1`。
+> 已有的功能开关配置不会被清除。
 
 ### 常用指令
 
@@ -174,7 +173,7 @@ PS：如果你觉得该项目有用，希望能点一个Star~
 - 在“功能开关”里按 JX3API 分类、分组或逐条指令开关功能，默认全部开启；
 - 点击分类卡片可收起或展开；在大类或分组外勾选可全选该类指令。
 
-重新运行 `install.cmd` 会重新安装 fork 修改版，并写入 JX3API Token 与图片渲染
+重新运行 `install.cmd` 会重新安装固定版本的上游插件，并写入 JX3API Token 与图片渲染
 默认值，但不会清除已经保存的 `features` 功能开关配置。
 
 ### 更换 LLM 服务
@@ -205,7 +204,7 @@ QQ 客户端 / QQ 群
         │  OneBot v11，本机回环 127.0.0.1:6199
         ▼
    AstrBot 4.29.4
-        ├── 剑网 3 查询插件（fork 修改版，含逐条功能开关）
+        ├── 剑网 3 查询插件（上游 v3.5.5，含逐条功能开关）
         └── LLM Provider（可选，由 AstrBot 自身配置）
 ```
 
@@ -218,7 +217,7 @@ jx3-qqbot-public/
 │   ├── config/default-persona.txt
 │   └── windows-native/           # Windows 安装、运行与维护脚本
 ├── docs/                         # 使用说明、FAQ 与发布检查
-└── plugins/astrbot_plugin_jx3/   # fork 修改版快照（AGPL-3.0）
+└── plugins/astrbot_plugin_jx3/   # 上游 v3.5.5 快照（AGPL-3.0）
 ```
 
 运行后会生成以下本地目录，它们不会进入 Git：
@@ -291,19 +290,20 @@ git diff --check
 py -3.12 -m compileall -q deploy/windows-native plugins/astrbot_plugin_jx3
 Push-Location .\plugins\astrbot_plugin_jx3
 py -3.12 -m unittest discover -s tests -v
+node --test tests/test_features_webui.js
 Pop-Location
 ```
 
-插件快照可通过 `deploy/windows-native/install-fork-plugin.ps1` 从固定提交恢复。
+插件快照可通过 `deploy/windows-native/install-plugin.ps1` 从固定提交恢复。
 单元测试需要先安装 `plugins/astrbot_plugin_jx3/requirements.txt` 和 `jinja2`；
-测试文件位于 `plugins/astrbot_plugin_jx3/tests/`。
+WebUI 测试需要 Node.js 18+；测试文件位于 `plugins/astrbot_plugin_jx3/tests/`。
 
 ## 第三方组件与许可证
 
 | 组件 | 用途 | 许可证 |
 |---|---|---|
 | [AstrBot](https://github.com/AstrBotDevs/AstrBot) | 机器人框架 | AGPL-3.0 |
-| [ShikaC/astrbot_plugin_jx3](https://github.com/ShikaC/astrbot_plugin_jx3) | 剑网 3 数据查询插件修改版（`feature/feature-switch@76a1c611`，基于上游） | AGPL-3.0 |
+| [qsc20001102/astrbot_plugin_jx3](https://github.com/qsc20001102/astrbot_plugin_jx3) | 剑网 3 数据查询插件（`v3.5.5@85c4752`） | AGPL-3.0 |
 | [NapCatQQ](https://github.com/NapNeko/NapCatQQ) | QQ 协议端，按原样运行 | Limited Redistribution License |
 | [JX3API](https://www.jx3api.com/) | 剑网 3 数据接口 | 服务方条款 |
 | [JX3BOX](https://www.jx3box.com/) | 配装数据接口 | 服务方条款 |
